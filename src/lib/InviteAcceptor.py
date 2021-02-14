@@ -1,4 +1,5 @@
 from collections import defaultdict
+import traceback
 
 class keydefaultdict(defaultdict):
     def __missing__(self, key):
@@ -49,7 +50,9 @@ class InviteAcceptor():
                         if(log_sub != None):
                             message.reply("You have added /u/{0}, a Modlog Transparency Bot to your mod team.\n\nFuture mod actions will be posted to /r/{1}".format(self.reddit.user.me().name, log_sub))
                         else:
-                            message.reploy("You have added /u/{0}, a Modlog Transparency Bot to your mod team.\n\nI couldn't make a log-sub for you just yet. I've let my creator know.".format(self.reddit.user.me().name)
+                            message.reploy("You have added /u/{0}, a Modlog Transparency Bot to your mod team.\n\nI couldn't make a log-sub for you just yet. I've let my creator know.".format(self.reddit.user.me().name))
                             print("COULD NOT MAKE A MODLOG SUB FOR /r/{0}".format(message.subreddit.display_name))
             except KeyboardInterrupt as e:
                 self.running = False
+            except Exception as e:
+                traceback.print_exc()

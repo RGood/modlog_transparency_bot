@@ -8,7 +8,6 @@ from configparser import ConfigParser
 from lib.InviteAcceptor import InviteAcceptor
 from lib.ModLogger import ModLogger
 from collections import defaultdict
-import traceback
 
 #============================================Basic Config Params===================================================
 config = ConfigParser()
@@ -115,13 +114,7 @@ def main():
     iaThread.start()
 
     ml = ModLogger(reddit=r, target_map=target_subs, ignored_users=ignored_users)
-    while(running):
-        try:
-            ml.run()
-        except KeyboardInterrupt:
-            running = False
-        except Exception as e:
-            traceback.print_exc()
+    ml.run()
 
 if __name__ == '__main__':
     main()
