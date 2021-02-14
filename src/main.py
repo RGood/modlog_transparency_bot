@@ -20,6 +20,9 @@ scope = ['modconfig', 'subscribe', 'structuredstyles', 'mysubreddits', 'submit',
 #SEE http://praw.readthedocs.org/en/latest/pages/oauth.html#oauth-scopes FOR DETAILS ON SCOPE.
 #These permissions should be enough, though.
 #=============================================Advanced Config Params===============================================
+#If you only have command-line access to the host, set open_access_page to false
+#If you have login info set in info.ini, this var goes unused
+OPEN_ACCESS_PAGE = False
 #==================================================End Config======================================================
 
 app = Flask(__name__)
@@ -48,10 +51,6 @@ def authorized():
 r = None
 
 #If login is configured with info.ini, use it otherwise open an oauth webpage flow
-
-#If you only have command-line access to the host, you must add bot login to the info.ini
-open_access_page = False
-
 if(username != None and username != "" and password != None and password != ""):
     r = praw.Reddit(
     	client_id=config["App"]["id"],
@@ -70,7 +69,7 @@ else:
     	#password=config["Login"]["password"]
     )
 
-    if(open_access_page):
+    if(OPEN_ACCESS_PAGE):
     	webbrowser.open(r.auth.url(scope, "UniqueKey"))
     else:
     	print("Follow this address to grant access: ")
